@@ -1,0 +1,24 @@
+@use "sass:color" as *;
+
+$colors: (
+	"white": hsl(0, 0%, 100%),
+	"black": hsl(0, 0%, 0%),
+	"salmon": hsl(7, 99%, 70%),
+	"yellow": hsl(51, 100%, 49%),
+	"off-black": hsl(222, 25%, 20%),
+	"off-white": hsl(25, 3%, 100%),
+	"cyan-dark": hsl(167, 40%, 24%),
+	"cyan-dark-moderate": hsl(168, 34%, 41%),
+	"blue-dark": hsl(198, 62%, 26%),
+	"blue-dark-desaturated": hsl(212, 27%, 19%),
+	"grayish-blue": hsl(210, 4%, 67%),
+	"grayish-blue-dark": hsl(232, 10%, 55%),
+	"grayish-blue-very-dark": hsl(213, 9%, 39%)
+);
+
+// Project Variables
+:root {
+	@each $name, $color in $colors {
+		--#{$name}: #{$color};
+	}
+}

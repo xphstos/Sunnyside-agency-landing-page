@@ -1,0 +1,66 @@
+@use "sass:map" as *;
+@use "./variables" as *;
+@use './functions' as *;
+
+// Get CSS Var
+@function v($name, $fallback: null) {
+	@if ($fallback) {
+		@return var(--#{$name}, #{$fallback});
+	} @else {
+		@return var(--#{$name});
+	}
+}
+
+// Get SCSS Color Var
+@function c($name) {
+	@if has-key($colors, $name) {
+		@return get($colors, $name);
+	}
+
+	@return null;
+}
+
+// Fluid All the Things
+@function size($min: 10px, $max: 20px, $breakpoint: 768) {
+	@return clamp(#{$min}, (#{strip($max)} / #{$breakpoint}) * 100vw, #{$max});
+}
+
+// Aspect Ratio
+@mixin ar($w: 16, $h: 9, $child: true) {
+	aspect-ratio: #{$w} / #{$h};
+
+	@if $child {
+		display: grid;
+
+		> * {
+			grid-area: 1 / -1;
+			width: 100%;
+			height: 100%;
+			object-position: center;
+			object-fit: cover;
+		}
+	}
+
+	@supports not (aspect-ratio: 1 / 1) {
+		position: relative;
+
+		&:before {
+			display: block;
+			content: "";
+			width: 100%;
+			padding-top: calc((#{$h} / #{$w}) * 100%);
+		}
+
+		@if $child {
+			> * {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				object-position: center;
+				object-fit: cover;
+			}
+		}
+	}
+}
